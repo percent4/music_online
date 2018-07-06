@@ -16,7 +16,6 @@
         function load(){
 
             var music = [[${music}]];
-            alert(music);
 
             if(music.indexOf("code") != -1){
                 var obj = JSON.parse(music);
@@ -53,7 +52,7 @@
         }
     </script>
 </head>
-<body onload="load()">
+<body onload="load()" background="/IMAGE/laputa.jpg">
 
 <div class="demo">
 
@@ -66,7 +65,7 @@
     </div>
 
     <br>
-    <button class="btn btn-success" id="download">DOWNLOAD</button>
+    <a href="/download"><button class="btn btn-success" id="download">DOWNLOAD</button></a>
     <a href="/index"><button class="btn btn-primary" id="return">RETURN</button></a>
     <button class="btn btn-danger" id="history">HISTORY</button>
 
