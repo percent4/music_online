@@ -24,7 +24,7 @@ public class SongController {
         String platform = songInfo.getPlatform();
         System.out.println(song_name+':'+platform);
         MusicDownload music_download = new MusicDownload(song_name, platform);
-        byte[] post_data = music_download.sendPost().getBytes("utf-8");
+        byte[] post_data = music_download.doPost().getBytes("utf-8");
         String info = new String(post_data,"utf-8");
         System.out.println(info);
         map.put("music", info);
@@ -36,7 +36,5 @@ public class SongController {
     public String devEnviroment(){
         return "dev";
     }
-
-
 
 }

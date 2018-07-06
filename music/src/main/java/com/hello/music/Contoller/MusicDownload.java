@@ -1,21 +1,11 @@
 package com.hello.music.Contoller;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.ConnectException;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class MusicDownload {
 
@@ -48,59 +38,59 @@ public class MusicDownload {
     }
 
     // HTTP POST request
-    public String sendPost(){
+    public String doPost(){
 
         String url = "http://www.qmdai.cn/yinyuesou/";
-
-        HttpClient client = new DefaultHttpClient();
-        HttpPost post = new HttpPost(url);
-
-        // HTTP headers
-        final String USER_AGENT = "Mozilla/5.0 (X11; Linux i686; U;) Gecko/20070322 Kazehakase/0.4.5";
-        //final String USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36";
-        post.setHeader("User-Agent", USER_AGENT);
-        post.setHeader("Connection", "keep-alive");
-        post.setHeader("Accept", "application/json, text/javascript, */*; q=0.01");
-        post.setHeader("Origin", "http://www.qmdai.cn");
-        post.setHeader("X-Requested-With", "XMLHttpRequest");
-        post.setHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
-        post.setHeader("Accept-Encoding", "gzip, deflate");
-        post.setHeader("Accept-Language", "zh-CN,zh;q=0.9");
-
-        // HTTP post data
-        List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
-        urlParameters.add(new BasicNameValuePair("input", name));
-        urlParameters.add(new BasicNameValuePair("filter", "name"));
-        urlParameters.add(new BasicNameValuePair("type", platform));
-        urlParameters.add(new BasicNameValuePair("page", "1"));
-
-        post.setEntity(new UrlEncodedFormEntity(urlParameters, Charset.forName("UTF-8")));
-
         try {
-            HttpResponse response = client.execute(post);
+            URL obj = new URL(url);
+            HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
 
-            // HTTP response
-            // get HTTP response content in String format
-            BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), Charset.forName("UTF-8")));
+            conn.setUseCaches(false);
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Host", "http://www.qmdai.cn");
+            final String USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36";
+            conn.setRequestProperty("User-Agent", USER_AGENT);
+            conn.setRequestProperty("Accept", "application/json, text/javascript, */*; q=0.01");
+            conn.setRequestProperty("Accept-Language", "zh-CN,zh;q=0.9");
+            conn.setRequestProperty("Connection", "keep-alive");
+            conn.setRequestProperty("Origin", "http://www.qmdai.cn");
+            conn.setRequestProperty("X-Requested-With", "XMLHttpRequest");
+            //conn.setRequestProperty("Referer", "https://accounts.google.com/ServiceLoginAuth");
+            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+            String postParams = String.format("input=%s&filter=name&type=%s&page=1", name, platform);
+            System.out.println(postParams);
+            conn.setRequestProperty("Content-Length", Integer.toString(postParams.length()));
 
-            StringBuffer result = new StringBuffer();
-            String line = "";
-            while ((line = rd.readLine()) != null) {
-                result.append(line);
+            // For POST only - START
+            conn.setDoOutput(true);
+            OutputStreamWriter os = new OutputStreamWriter(conn.getOutputStream(),"UTF-8");
+            os.write(postParams);
+            os.flush();
+            os.close();
+            // For POST only - END
+
+            int responseCode = conn.getResponseCode();
+            System.out.println("POST Response Code :: " + responseCode);
+
+            if (responseCode == HttpURLConnection.HTTP_OK) { //success
+                BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+                String inputLine;
+                StringBuffer response = new StringBuffer();
+
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+
+                // print result
+                return response.toString();
+            } else {
+                return "There is somthing wrong!";
             }
-
-            return result.toString();
         }
-        catch (ConnectException e){
-            return "连接超时，请重试！";
+        catch(Exception e){
+            return "There is somthing wrong!";
         }
-        catch (ClientProtocolException e) {
-            return e.toString();
-        }
-        catch (IOException e) {
-            return e.toString();
-        }
-
     }
 
 
