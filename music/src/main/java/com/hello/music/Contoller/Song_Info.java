@@ -19,5 +19,4 @@ public class Song_Info {
     public void setPlatform(String platform) {
         this.platform = platform;
     }
-
 }
