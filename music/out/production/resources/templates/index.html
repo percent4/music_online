@@ -5,54 +5,76 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link href="/CSS/bootstrap.min.css" rel="stylesheet">
     <link rel="shortcut icon" href="/IMAGE/music.ico">
+
     <style>
         mark {
             background-color:#FF0000; font-weight:bold;
         }
+        #content{
+                position: absolute;
+                top: 5%;
+                left: 30%;
+                trasform: translate(-50%)
+                }
     </style>
+
 </head>
-<body>
-<center>
+<body id="content" background="/IMAGE/laputa.jpg">
 
     <br><br>
-    <a href="/dev"><h2 style="color:red">Music Player</h2></a>
-    <br><br>
-
-    <form class="form-horizontal" role="form" action="#" th:action="@{/index}" th:object="${songInfo}" method="post">
-
-        <div class="form-group" style="width:500px">
-            <label for="expression" class="col-sm-4 control-label">Song:</label>
-            <div class="col-sm-8">
-                <input type="text"  th:field="*{song}" class="form-control" id="expression" placeholder="Enter a expression">
-            </div>
+    <div class="panel panel-success" style="width:500px">
+        <div class="panel-heading" align="center">
+            <a href="/dev"><h2 class="panel-title" style="color:red">Music Player</h2></a>
         </div>
+        <div class="panel-body" align="center">
+            <form class="form-horizontal" role="form" action="#" th:action="@{/index}" th:object="${songInfo}" method="post">
 
-        <div class="form-group" style="width:500px">
-            <label  class="col-sm-4 control-label">Platform:</label>
-            <div class="col-sm-8">
-                <label class="radio-inline">
-                    <input type="radio" th:field="*{platform}" value="netease" name="platform">网易
-                </label>
-                <label class="radio-inline">
-                    <input type="radio" th:field="*{platform}" value="qq" name="platform">QQ
-                </label>
-                <label class="radio-inline">
-                    <input type="radio" th:field="*{platform}" value="kuwo" name="platform">酷我
-                </label>
+                <div class="form-group" style="width:500px">
+                    <label for="expression" class="col-sm-4 control-label">Song:</label>
+                    <div class="col-sm-8">
+                        <input type="text"  th:field="*{song}" class="form-control" id="expression" placeholder="Song name">
+                    </div>
+                </div>
 
-            </div>
+                <div class="form-group" style="width:500px">
+                    <label  class="col-sm-4 control-label">Platform:</label>
+                    <div class="col-sm-8">
+                        <label class="radio-inline">
+                            <input type="radio" th:field="*{platform}" value="netease" name="platform"/>网易
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" th:field="*{platform}" value="qq" name="platform" />QQ
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" th:field="*{platform}" value="kuwo" name="platform"/>酷我
+                        </label>
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div>
+                        <button type="submit" class="btn btn-primary" id="btn">SEARCH</button>
+                        <input type="reset" class="btn btn-warning" value="RESET" />
+
+                    </div>
+                </div>
+            </form>
         </div>
+    </div>
 
-        <div class="form-group">
-            <div>
-                <button type="submit" class="btn btn-primary" id="btn">SEARCH</button>
-                <input type="reset" class="btn btn-warning" value="RESET" />
-
-            </div>
+    <div class="panel panel-info" style="width:500px">
+        <div class="panel-heading" align="center">
+            <h3 class="panel-title">使用说明</h3>
         </div>
-    </form>
-
-</center>
+        <div class="panel-body">
+            <ul>
+                <li>输入歌曲名称和音乐平台，稍等片刻，即可享受美妙的音乐；<br></li>
+                <li>点击红色的“Music Player”文字，可查看该网站的开发历史；<br></li>
+                <li>后续功能正在开发中，敬请期待~<br></li>
+            </ul>
+        </div>
+    </div>
 
 </body>
 </html>
