@@ -7,6 +7,8 @@
     <link href="/CSS/APlayer.min.css" rel="stylesheet">
     <link rel="shortcut icon" href="/IMAGE/music.ico">
     <script src="/JS/APlayer.min.js"></script>
+    <script src="/JS/jquery.min.js"></script>
+    <script src="/JS/play.js"></script>
     <style>
         mark {background-color:#FF0000; font-weight:bold;}
         .demo {width:360px;margin:60px auto 10px auto}
@@ -68,6 +70,16 @@
     <a href="/download"><button class="btn btn-success" id="download">DOWNLOAD</button></a>
     <a href="/index"><button class="btn btn-primary" id="return">RETURN</button></a>
     <button class="btn btn-danger" id="history">HISTORY</button>
+
+    <br><br>
+
+    <div hidden="true" id="history_show">
+        <ol class="list-group">
+            <li class="list-group-item active">搜索记录（只显示近10条）：</li>
+            <li class="list-group-item" th:each="column:${columns}" th:text="${column}">Column</li>
+        </ol>
+    </div>
+
 
 </div>
 

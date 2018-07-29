@@ -24,7 +24,7 @@ public class SongController {
 
         model.addAttribute("songInfo", new Song_Info());
         // 获取访问量信息
-        String txtFilePath = "/home/vcap/app/BOOT-INF/classes/static/others/count.txt";
+        String txtFilePath = "/home/count.txt";
         Long count = Get_Visit_Count(txtFilePath);
         System.out.println(count);
         map.put("count", count);
@@ -68,13 +68,13 @@ public class SongController {
     @RequestMapping("/download")
     public String downloadFile(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
         //String fileName = "aim_test.txt";  //下载的文件名
-        File scFileDir = new File("/home/vcap/app/BOOT-INF/classes/static/music_store");
+        File scFileDir = new File("/home/music_store");
         File TrxFiles[] = scFileDir.listFiles();
         System.out.println(TrxFiles[0]);
         String fileName = TrxFiles[0].getName(); //下载的文件名
         if (fileName != null) {
             //设置文件路径
-            String realPath = "/home/vcap/app/BOOT-INF/classes/static/music_store/";
+            String realPath = "/home/music_store/";
             File file = new File(realPath, fileName);
             if (file.exists()) {
                 response.setHeader("content-type", "application/octet-stream");
@@ -153,7 +153,7 @@ public class SongController {
 
     public static void writeTXT(String song_name, String platform) {
 
-        String filePath = "/home/vcap/app/BOOT-INF/classes/static/others/history.txt";
+        String filePath = "/home/history.txt";
         //String filePath = "E://history.txt";
 
         FileWriter writer = null;
@@ -194,7 +194,7 @@ public class SongController {
     }
 
     public static ArrayList<String> read_txt() {
-        String filePath = "/home/vcap/app/BOOT-INF/classes/static/others/history.txt";
+        String filePath = "/home/history.txt";
         //String filePath = "E://history.txt";
 
         File file = new File(filePath);
@@ -243,6 +243,16 @@ public class SongController {
 
         }
 
+    }
+
+    @GetMapping("/tf")
+    public String withTensorFlow(){
+        return "tf";
+    }
+
+    @GetMapping("/sudoku")
+    public String Sudoku(){
+        return "sudoku";
     }
 
 }

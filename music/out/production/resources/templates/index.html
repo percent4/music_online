@@ -10,16 +10,18 @@
         mark {
             background-color:#FF0000; font-weight:bold;
         }
-        #content{
-                position: absolute;
-                top: 5%;
-                left: 30%;
-                trasform: translate(-50%)
-                }
     </style>
 
+    <script th:inline="javascript">
+        function load(){
+            var count = [[${count}]];
+            document.getElementById("visit").innerHTML = count.toString();
+        }
+    </script>
+
 </head>
-<body id="content" background="/IMAGE/laputa.jpg">
+<body background="/IMAGE/laputa.jpg" onload="load()">
+<center>
 
     <br><br>
     <div class="panel panel-success" style="width:500px">
@@ -43,7 +45,7 @@
                             <input type="radio" th:field="*{platform}" value="netease" name="platform"/>网易
                         </label>
                         <label class="radio-inline">
-                            <input type="radio" th:field="*{platform}" value="qq" name="platform" />QQ
+                            <input type="radio" th:field="*{platform}" value="qq" name="platform" th:checked="checked"/>QQ
                         </label>
                         <label class="radio-inline">
                             <input type="radio" th:field="*{platform}" value="kuwo" name="platform"/>酷我
@@ -59,6 +61,7 @@
 
                     </div>
                 </div>
+
             </form>
         </div>
     </div>
@@ -76,5 +79,7 @@
         </div>
     </div>
 
+    <p>&emsp;&emsp;本页面已被访问<span id="visit"></span>次。</p>
+</center>
 </body>
 </html>

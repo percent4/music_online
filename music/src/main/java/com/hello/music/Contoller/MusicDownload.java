@@ -93,10 +93,10 @@ public class MusicDownload {
                 System.out.println("url -> "+ song_url);
 
                 // clear all files in the directory
-                clearFiles("/home/vcap/app/BOOT-INF/classes/static/music_store");
+                clearFiles("/home/music_store");
                 // 利用FileUtils.copyURLToFile()实现文件下载
                 URL httpurl = new URL(song_url);
-                FileUtils.copyURLToFile(httpurl, new File("/home/vcap/app/BOOT-INF/classes/static/music_store/"+title+".mp3"));
+                FileUtils.copyURLToFile(httpurl, new File("/home/music_store/"+title+".mp3"));
 
                 return response.toString();
 
